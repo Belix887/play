@@ -113,25 +113,44 @@ function nextDialog() {
             currentDialogIndex = 0;
             
             // Скрываем экран диалога
-            hideScreen('dialog-screen');
+            if (typeof hideScreen === 'function') {
+                hideScreen('dialog-screen');
+            } else {
+                const dialogScreen = document.getElementById('dialog-screen');
+                if (dialogScreen) {
+                    dialogScreen.classList.remove('active');
+                }
+            }
             
             // Небольшая задержка для плавного перехода
             setTimeout(() => {
                 console.log('Выполняем callback...');
                 try {
-                    callback();
-                    console.log('Callback выполнен успешно');
+                    if (typeof callback === 'function') {
+                        callback();
+                        console.log('Callback выполнен успешно');
+                    } else {
+                        console.error('Callback не является функцией!');
+                    }
                 } catch (error) {
                     console.error('Ошибка при выполнении callback:', error);
+                    console.error('Stack trace:', error.stack);
                 }
             }, 200);
         } else {
             console.error('ОШИБКА: Нет callback для диалога!');
             // Попытка перейти к игре напрямую
             console.log('Пытаемся перейти к игре напрямую...');
-            hideScreen('dialog-screen');
+            const dialogScreen = document.getElementById('dialog-screen');
+            if (dialogScreen) {
+                dialogScreen.classList.remove('active');
+            }
             setTimeout(() => {
-                initGame(1);
+                if (typeof initGame === 'function') {
+                    initGame(1);
+                } else {
+                    console.error('Функция initGame не найдена!');
+                }
             }, 200);
         }
     }
