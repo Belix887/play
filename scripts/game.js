@@ -13,43 +13,73 @@ let levelProgress = {};
 
 // Инициализация игры
 function initGame(levelId) {
-    console.log('initGame вызван для уровня:', levelId);
-    const level = getLevel(levelId);
+    // Делаем функцию глобально доступной
+    if (!window.initGame) {
+        window.initGame = initGame;
+    }
+    console.log('=== initGame вызван ===');
+    console.log('Уровень ID:', levelId);
+    console.log('getLevel доступен:', typeof getLevel);
+    
+    let level;
+    if (typeof getLevel === 'function') {
+        level = getLevel(levelId);
+    } else if (typeof window.getLevel === 'function') {
+        level = window.getLevel(levelId);
+    } else {
+        console.error('Функция getLevel не найдена!');
+        return;
+    }
+    
     if (!level) {
         console.error('Уровень не найден:', levelId);
         return;
     }
     
     console.log('Уровень найден:', level.name);
-    currentLevel = level;
-    timeLeft = level.timeLimit;
-    selectedCells = [];
-    comboCount = 0;
-    currentCombo = 0;
-    isPaused = false;
-    isGameOver = false;
+    console.log('Цели уровня:', level.objectives);
     
-    // Инициализация целей уровня
-    levelObjectives = {};
-    levelProgress = {};
-    level.objectives.forEach(obj => {
-        levelObjectives[obj.type] = obj.count;
-        levelProgress[obj.type] = 0;
-    });
-    
-    console.log('Цели уровня:', levelObjectives);
-    
-    // Создание игрового поля
-    createBoard();
-    console.log('Игровое поле создано');
-    
-    // Обновление UI
-    updateUI();
-    console.log('UI обновлен');
-    
-    // Запуск таймера
-    startTimer();
-    console.log('Таймер запущен');
+    try {
+        currentLevel = level;
+        timeLeft = level.timeLimit;
+        selectedCells = [];
+        comboCount = 0;
+        currentCombo = 0;
+        isPaused = false;
+        isGameOver = false;
+        
+        // Инициализация целей уровня
+        levelObjectives = {};
+        levelProgress = {};
+        if (level.objectives && Array.isArray(level.objectives)) {
+            level.objectives.forEach(obj => {
+                levelObjectives[obj.type] = obj.count;
+                levelProgress[obj.type] = 0;
+            });
+        }
+        
+        console.log('Цели уровня инициализированы:', levelObjectives);
+        
+        // Создание игрового поля
+        console.log('Создаем игровое поле...');
+        createBoard();
+        console.log('Игровое поле создано');
+        
+        // Обновление UI
+        console.log('Обновляем UI...');
+        updateUI();
+        console.log('UI обновлен');
+        
+        // Запуск таймера
+        console.log('Запускаем таймер...');
+        startTimer();
+        console.log('Таймер запущен');
+    } catch (error) {
+        console.error('ОШИБКА при инициализации игры:', error);
+        console.error('Stack trace:', error.stack);
+        alert('Ошибка при запуске игры: ' + error.message);
+        return;
+    }
     
     // Показ экрана игры
     console.log('Показываем игровой экран');
@@ -76,7 +106,30 @@ function initGame(levelId) {
     // Дополнительная проверка через showScreen
     if (typeof showScreen === 'function') {
         showScreen('game-screen');
+    } else if (typeof window.showScreen === 'function') {
+        window.showScreen('game-screen');
+    } else {
+        console.error('Функция showScreen не найдена!');
     }
+    
+    // Финальная проверка
+    setTimeout(() => {
+        const gameScreen = document.getElementById('game-screen');
+        if (gameScreen) {
+            const isActive = gameScreen.classList.contains('active');
+            const display = window.getComputedStyle(gameScreen).display;
+            console.log('Финальная проверка экрана:');
+            console.log('- Класс active:', isActive);
+            console.log('- Display:', display);
+            console.log('- Виден:', display !== 'none');
+            
+            if (!isActive || display === 'none') {
+                console.error('Экран не виден! Принудительно активируем...');
+                gameScreen.classList.add('active');
+                gameScreen.style.display = 'flex';
+            }
+        }
+    }, 300);
     
     console.log('Игровой экран должен быть виден');
 }

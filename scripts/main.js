@@ -32,6 +32,10 @@ function initScreens() {
 
 // Показать экран
 function showScreen(screenId) {
+    // Делаем функцию глобально доступной
+    window.showScreen = showScreen;
+    
+    console.log('showScreen вызван для:', screenId);
     const screens = document.querySelectorAll('.screen');
     screens.forEach(screen => {
         screen.classList.remove('active');
@@ -41,6 +45,9 @@ function showScreen(screenId) {
     if (targetScreen) {
         targetScreen.classList.add('active');
         currentScreen = screenId;
+        console.log('Экран', screenId, 'активирован');
+    } else {
+        console.error('Экран', screenId, 'не найден в DOM!');
     }
 }
 

@@ -124,17 +124,54 @@ function nextDialog() {
             
             // Небольшая задержка для плавного перехода
             setTimeout(() => {
-                console.log('Выполняем callback...');
+                console.log('=== Выполняем callback ===');
+                console.log('Callback:', callback);
+                console.log('Тип callback:', typeof callback);
+                
                 try {
                     if (typeof callback === 'function') {
-                        callback();
-                        console.log('Callback выполнен успешно');
+                        console.log('Вызываем callback...');
+                        const result = callback();
+                        console.log('Callback выполнен, результат:', result);
+                        
+                        // Дополнительная проверка - если initGame не был вызван, вызываем его напрямую
+                        setTimeout(() => {
+                            const gameScreen = document.getElementById('game-screen');
+                            if (gameScreen && !gameScreen.classList.contains('active')) {
+                                console.log('Игровой экран не активен, вызываем initGame напрямую');
+                                if (typeof initGame === 'function') {
+                                    initGame(1);
+                                } else if (typeof window.initGame === 'function') {
+                                    window.initGame(1);
+                                } else {
+                                    console.error('initGame не найден ни локально, ни в window!');
+                                }
+                            }
+                        }, 500);
                     } else {
-                        console.error('Callback не является функцией!');
+                        console.error('Callback не является функцией! Значение:', callback);
+                        // Пытаемся вызвать initGame напрямую
+                        console.log('Пытаемся вызвать initGame напрямую...');
+                        if (typeof initGame === 'function') {
+                            initGame(1);
+                        } else if (typeof window.initGame === 'function') {
+                            window.initGame(1);
+                        }
                     }
                 } catch (error) {
-                    console.error('Ошибка при выполнении callback:', error);
+                    console.error('ОШИБКА при выполнении callback:', error);
                     console.error('Stack trace:', error.stack);
+                    // Пытаемся вызвать initGame даже при ошибке
+                    console.log('Пытаемся вызвать initGame после ошибки...');
+                    try {
+                        if (typeof initGame === 'function') {
+                            initGame(1);
+                        } else if (typeof window.initGame === 'function') {
+                            window.initGame(1);
+                        }
+                    } catch (e) {
+                        console.error('Не удалось вызвать initGame:', e);
+                    }
                 }
             }, 200);
         } else {
