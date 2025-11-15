@@ -123,15 +123,25 @@ function initMenu() {
 
 // Начать игру
 function startGame() {
-    console.log('startGame вызван');
+    console.log('=== startGame вызван ===');
     const gameState = getGameState();
     const firstLevel = getLevel(1);
     
-    if (firstLevel && firstLevel.dialog && firstLevel.dialog.before) {
+    if (!firstLevel) {
+        console.error('Первый уровень не найден!');
+        return;
+    }
+    
+    console.log('Первый уровень найден:', firstLevel.name);
+    
+    if (firstLevel.dialog && firstLevel.dialog.before && firstLevel.dialog.before.length > 0) {
         console.log('Показываем диалоги перед уровнем, количество:', firstLevel.dialog.before.length);
         showDialog(firstLevel.dialog.before, () => {
-            console.log('Callback диалога вызван, запускаем игру');
-            initGame(1);
+            console.log('=== Callback диалога вызван ===');
+            console.log('Запускаем initGame(1)...');
+            setTimeout(() => {
+                initGame(1);
+            }, 100);
         });
     } else {
         console.log('Диалогов нет, сразу запускаем игру');
