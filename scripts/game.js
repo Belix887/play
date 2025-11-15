@@ -53,17 +53,48 @@ function initGame(levelId) {
     
     // Показ экрана игры
     console.log('Показываем игровой экран');
-    showScreen('game-screen');
+    
+    // Убеждаемся, что все другие экраны скрыты
+    const allScreens = document.querySelectorAll('.screen');
+    allScreens.forEach(screen => {
+        screen.classList.remove('active');
+    });
+    
+    // Показываем игровой экран
+    const gameScreen = document.getElementById('game-screen');
+    if (gameScreen) {
+        gameScreen.classList.add('active');
+        console.log('Игровой экран найден и активирован');
+        
+        // Проверяем видимость
+        const isVisible = window.getComputedStyle(gameScreen).display !== 'none';
+        console.log('Игровой экран виден:', isVisible);
+    } else {
+        console.error('Игровой экран не найден в DOM!');
+    }
+    
+    // Дополнительная проверка через showScreen
+    if (typeof showScreen === 'function') {
+        showScreen('game-screen');
+    }
+    
     console.log('Игровой экран должен быть виден');
 }
 
 // Создание игрового поля
 function createBoard() {
+    console.log('=== createBoard вызван ===');
     const board = document.getElementById('game-board');
-    if (!board) return;
+    if (!board) {
+        console.error('Игровое поле (game-board) не найдено в DOM!');
+        return;
+    }
     
+    console.log('Игровое поле найдено, очищаем...');
     board.innerHTML = '';
     gameBoard = [];
+    
+    console.log('Создаем ячейки, размер поля:', CONFIG.BOARD_SIZE, 'x', CONFIG.BOARD_SIZE);
     
     // Создание двумерного массива
     for (let row = 0; row < CONFIG.BOARD_SIZE; row++) {
@@ -75,10 +106,16 @@ function createBoard() {
         }
     }
     
+    console.log('Ячейки созданы, всего:', CONFIG.BOARD_SIZE * CONFIG.BOARD_SIZE);
+    
     // Удаление начальных совпадений
-    while (findMatches().length > 0) {
+    let attempts = 0;
+    while (findMatches().length > 0 && attempts < 10) {
         refillBoard();
+        attempts++;
     }
+    
+    console.log('Игровое поле готово');
 }
 
 // Создание ячейки
