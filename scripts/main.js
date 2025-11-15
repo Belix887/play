@@ -3,8 +3,26 @@ let currentScreen = 'main-menu';
 
 // Инициализация приложения
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('=== Инициализация приложения ===');
+    
     // Инициализация Telegram
-    initTelegram();
+    const isTelegram = initTelegram();
+    console.log('Telegram Web App:', isTelegram ? 'обнаружен' : 'не обнаружен');
+    
+    // Специальные настройки для Telegram
+    if (isTelegram) {
+        // Устанавливаем правильную высоту для Telegram
+        document.documentElement.style.height = '100%';
+        document.body.style.height = '100%';
+        document.body.style.overflow = 'hidden';
+        
+        // Ждем готовности Telegram
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand();
+            console.log('Telegram Web App готов');
+        }
+    }
     
     // Загрузка состояния игры
     loadGameState();
@@ -20,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Проверка на продолжение игры
     checkContinueGame();
+    
+    console.log('Приложение инициализировано');
 });
 
 // Инициализация экранов

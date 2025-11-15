@@ -25,8 +25,12 @@ body {
     background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
     color: var(--text-primary);
     min-height: 100vh;
+    min-height: 100dvh; /* Для мобильных браузеров */
     overflow-x: hidden;
     position: relative;
+    /* Для Telegram Web App */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
 }
 
 body::before {
@@ -52,8 +56,12 @@ body::before {
 .screen {
     display: none;
     min-height: 100vh;
+    min-height: 100dvh; /* Для мобильных браузеров */
     padding: 20px;
+    padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
     animation: fadeIn 0.3s ease-in;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .screen.active {
