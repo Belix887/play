@@ -96,7 +96,7 @@ body::before {
     width: 100%;
     max-width: 300px;
     padding: 16px 24px;
-    margin: 12px 0;
+    margin: 12px auto;
     font-size: 18px;
     font-weight: 600;
     border: none;
@@ -110,6 +110,8 @@ body::before {
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: var(--shadow);
+    position: relative;
+    z-index: 10;
 }
 
 .menu-btn.primary {
@@ -135,6 +137,21 @@ body::before {
 .menu-btn.secondary:hover {
     background: var(--border-color);
     transform: translateY(-2px);
+}
+
+.menu-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.menu-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.menu-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .control-btn {

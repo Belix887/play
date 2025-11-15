@@ -62,38 +62,60 @@ function initMenu() {
     const btnBackStats = document.getElementById('btn-back-stats');
     
     if (btnStart) {
-        btnStart.addEventListener('click', () => {
+        btnStart.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Кнопка "Начать игру" нажата');
+            hapticFeedback('medium');
             resetGame();
             startGame();
         });
     }
     
     if (btnContinue) {
-        btnContinue.addEventListener('click', () => {
+        btnContinue.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Кнопка "Продолжить" нажата');
+            hapticFeedback('medium');
             continueGame();
         });
     }
     
     if (btnTutorial) {
-        btnTutorial.addEventListener('click', () => {
+        btnTutorial.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Кнопка "Обучение" нажата');
+            hapticFeedback('light');
             showScreen('tutorial-screen');
         });
     }
     
     if (btnStats) {
-        btnStats.addEventListener('click', () => {
+        btnStats.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Кнопка "Статистика" нажата');
+            hapticFeedback('light');
             showStats();
         });
     }
     
     if (btnBackMenu) {
-        btnBackMenu.addEventListener('click', () => {
+        btnBackMenu.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            hapticFeedback('light');
             showScreen('main-menu');
         });
     }
     
     if (btnBackStats) {
-        btnBackStats.addEventListener('click', () => {
+        btnBackStats.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            hapticFeedback('light');
             showScreen('main-menu');
         });
     }
