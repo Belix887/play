@@ -16,6 +16,27 @@ function showDialog(dialogs, callback) {
     
     showScreen('dialog-screen');
     displayDialog();
+    
+    // Убеждаемся, что кнопка имеет обработчик
+    setTimeout(() => {
+        const btnDialogNext = document.getElementById('btn-dialog-next');
+        if (btnDialogNext) {
+            // Удаляем старые обработчики
+            const newBtn = btnDialogNext.cloneNode(true);
+            btnDialogNext.parentNode.replaceChild(newBtn, btnDialogNext);
+            
+            // Добавляем новый обработчик
+            newBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Кнопка "Продолжить" в диалоге нажата');
+                hapticFeedback('light');
+                nextDialog();
+            });
+        } else {
+            console.error('Кнопка btn-dialog-next не найдена после показа диалога!');
+        }
+    }, 100);
 }
 
 // Отобразить текущий диалог
@@ -100,18 +121,34 @@ function nextDialog() {
 }
 
 // Инициализация кнопки диалога
-document.addEventListener('DOMContentLoaded', () => {
+function initDialogButton() {
     const btnDialogNext = document.getElementById('btn-dialog-next');
     if (btnDialogNext) {
-        btnDialogNext.addEventListener('click', (e) => {
+        // Удаляем все старые обработчики
+        const newBtn = btnDialogNext.cloneNode(true);
+        btnDialogNext.parentNode.replaceChild(newBtn, btnDialogNext);
+        
+        // Добавляем обработчики для разных событий
+        const handler = (e) => {
             e.preventDefault();
             e.stopPropagation();
             console.log('Кнопка "Продолжить" в диалоге нажата');
             hapticFeedback('light');
             nextDialog();
-        });
+            return false;
+        };
+        
+        newBtn.addEventListener('click', handler);
+        newBtn.addEventListener('touchend', handler);
+        newBtn.onclick = handler;
+        
+        console.log('Обработчик кнопки диалога установлен');
     } else {
         console.error('Кнопка btn-dialog-next не найдена!');
     }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initDialogButton();
 });
 

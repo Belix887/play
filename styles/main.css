@@ -61,6 +61,12 @@ body::before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 50;
+}
+
+#dialog-screen.active {
+    z-index: 150;
 }
 
 .screen.overlay {
