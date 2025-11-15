@@ -98,7 +98,8 @@
 
         <!-- Игровой экран -->
         <div id="game-screen" class="screen">
-            <div class="game-header">
+            <!-- Игра сверху -->
+            <div class="game-top-section">
                 <div class="game-info">
                     <div class="level-info">
                         <span class="level-label">Уровень</span>
@@ -110,6 +111,28 @@
                     </div>
                 </div>
                 
+                <div class="game-board-container">
+                    <div class="level-objective">
+                        <span id="objective-text">Соберите 50 🔴 файрволов</span>
+                        <div class="objective-progress">
+                            <div id="objective-progress-bar" class="progress-bar-fill"></div>
+                        </div>
+                        <span id="objective-count">0 / 50</span>
+                    </div>
+                    
+                    <div id="game-board" class="game-board"></div>
+                    
+                    <div class="game-controls">
+                        <button id="btn-pause" class="control-btn">⏸️ Пауза</button>
+                        <div class="combo-indicator" id="combo-indicator">
+                            <span>Комбо: <span id="combo-count">0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статистика внизу -->
+            <div class="game-bottom-section">
                 <div class="systems-monitor">
                     <div class="system-item" data-system="website">
                         <span class="system-icon">🌐</span>
@@ -145,25 +168,6 @@
                         <div class="health-bar">
                             <div class="health-fill" style="width: 100%"></div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="game-board-container">
-                <div class="level-objective">
-                    <span id="objective-text">Соберите 50 🔴 файрволов</span>
-                    <div class="objective-progress">
-                        <div id="objective-progress-bar" class="progress-bar-fill"></div>
-                    </div>
-                    <span id="objective-count">0 / 50</span>
-                </div>
-                
-                <div id="game-board" class="game-board"></div>
-                
-                <div class="game-controls">
-                    <button id="btn-pause" class="control-btn">⏸️ Пауза</button>
-                    <div class="combo-indicator" id="combo-indicator">
-                        <span>Комбо: <span id="combo-count">0</span></span>
                     </div>
                 </div>
             </div>

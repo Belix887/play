@@ -1,6 +1,6 @@
 /* Игровой экран */
 #game-screen {
-    padding: 10px;
+    padding: 5px;
     max-width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
@@ -9,10 +9,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
+    gap: 10px;
 }
 
 #game-screen.active {
@@ -21,18 +22,29 @@
     z-index: 100;
 }
 
+/* Игра сверху */
+.game-top-section {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    min-height: 0;
+}
+
 .game-header {
     width: 100%;
     max-width: 800px;
-    margin-bottom: 15px;
+    margin-bottom: 0;
 }
 
 .game-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    padding: 15px;
+    margin-bottom: 0;
+    padding: 10px 15px;
     background: var(--bg-card);
     border-radius: 12px;
     border: 1px solid var(--border-color);
@@ -93,12 +105,19 @@
     }
 }
 
+/* Статистика внизу */
+.game-bottom-section {
+    width: 100%;
+    max-width: 800px;
+    flex-shrink: 0;
+}
+
 /* Мониторинг систем */
 .systems-monitor {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-    padding: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    padding: 10px;
     background: var(--bg-card);
     border-radius: 12px;
     border: 1px solid var(--border-color);
@@ -184,15 +203,19 @@
     max-width: 800px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .level-objective {
-    padding: 15px;
+    padding: 10px 15px;
     background: var(--bg-card);
     border-radius: 12px;
     border: 1px solid var(--border-color);
     text-align: center;
+    flex-shrink: 0;
 }
 
 #objective-text {
@@ -228,17 +251,18 @@
 .game-board {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    gap: 4px;
-    padding: 15px;
+    gap: 3px;
+    padding: 10px;
     background: var(--bg-card);
     border-radius: 12px;
     border: 2px solid var(--border-color);
     aspect-ratio: 1;
     max-width: 100%;
     width: 100%;
-    max-width: min(100vw - 40px, 600px);
+    max-width: min(100vw - 20px, 500px);
     box-sizing: border-box;
     box-shadow: var(--shadow);
+    flex-shrink: 0;
 }
 
 .game-cell {
@@ -328,10 +352,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 10px 15px;
     background: var(--bg-card);
     border-radius: 12px;
     border: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
 .combo-indicator {
@@ -360,25 +385,65 @@
 
 /* Адаптивность */
 @media (max-width: 768px) {
+    #game-screen {
+        padding: 5px;
+        gap: 5px;
+    }
+    
+    .game-top-section {
+        gap: 5px;
+    }
+    
     .game-board {
-        gap: 3px;
-        padding: 10px;
+        gap: 2px;
+        padding: 8px;
+        max-width: min(100vw - 10px, 400px);
     }
     
     .game-cell {
-        font-size: 18px;
+        font-size: 16px;
     }
     
     .systems-monitor {
         grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        padding: 8px;
+    }
+    
+    .system-item {
+        padding: 8px;
+    }
+    
+    .system-icon {
+        font-size: 18px;
+    }
+    
+    .system-name {
+        font-size: 10px;
     }
     
     .level-number {
-        font-size: 24px;
+        font-size: 20px;
     }
     
     .timer {
-        font-size: 20px;
+        font-size: 18px;
+    }
+    
+    .game-info {
+        padding: 8px 12px;
+    }
+    
+    .level-objective {
+        padding: 8px 12px;
+    }
+    
+    .game-controls {
+        padding: 8px 12px;
+    }
+    
+    #objective-text {
+        font-size: 14px;
     }
 }
 

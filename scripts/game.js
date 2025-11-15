@@ -490,14 +490,24 @@ function calculateLevelResult(success) {
 
 // Таймер
 function startTimer() {
-    if (gameTimer) clearInterval(gameTimer);
+    if (gameTimer) {
+        clearInterval(gameTimer);
+        gameTimer = null;
+    }
+    
+    console.log('Таймер запущен, время:', timeLeft);
     
     gameTimer = setInterval(() => {
         if (!isPaused && !isGameOver) {
             timeLeft--;
             updateTimer();
             
+            console.log('Время осталось:', timeLeft);
+            
             if (timeLeft <= 0) {
+                console.log('Время вышло! Завершаем уровень...');
+                clearInterval(gameTimer);
+                gameTimer = null;
                 levelComplete(false);
             } else if (timeLeft <= 10) {
                 hapticFeedback('light');
