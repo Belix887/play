@@ -65,15 +65,36 @@ function typeText(element, text, speed = 30) {
 
 // Следующий диалог
 function nextDialog() {
+    console.log('nextDialog вызван, текущий индекс:', currentDialogIndex, 'всего диалогов:', currentDialogArray.length);
+    
+    // Если текст еще печатается, пропускаем анимацию
+    const textEl = document.getElementById('dialog-text');
+    if (textEl) {
+        const dialog = currentDialogArray[currentDialogIndex];
+        if (dialog && textEl.textContent.length < dialog.text.length) {
+            // Пропускаем анимацию, показываем весь текст сразу
+            textEl.textContent = dialog.text;
+            return;
+        }
+    }
+    
     currentDialogIndex++;
     if (currentDialogIndex < currentDialogArray.length) {
         displayDialog();
     } else {
         // Все диалоги показаны
+        console.log('Все диалоги завершены, вызываем callback');
         if (dialogCallback) {
             const callback = dialogCallback;
             dialogCallback = null;
-            callback();
+            currentDialogArray = [];
+            currentDialogIndex = 0;
+            // Небольшая задержка для плавного перехода
+            setTimeout(() => {
+                callback();
+            }, 100);
+        } else {
+            console.error('Нет callback для диалога!');
         }
     }
 }
@@ -82,7 +103,15 @@ function nextDialog() {
 document.addEventListener('DOMContentLoaded', () => {
     const btnDialogNext = document.getElementById('btn-dialog-next');
     if (btnDialogNext) {
-        btnDialogNext.addEventListener('click', nextDialog);
+        btnDialogNext.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Кнопка "Продолжить" в диалоге нажата');
+            hapticFeedback('light');
+            nextDialog();
+        });
+    } else {
+        console.error('Кнопка btn-dialog-next не найдена!');
     }
 });
 

@@ -123,14 +123,18 @@ function initMenu() {
 
 // Начать игру
 function startGame() {
+    console.log('startGame вызван');
     const gameState = getGameState();
     const firstLevel = getLevel(1);
     
     if (firstLevel && firstLevel.dialog && firstLevel.dialog.before) {
+        console.log('Показываем диалоги перед уровнем, количество:', firstLevel.dialog.before.length);
         showDialog(firstLevel.dialog.before, () => {
+            console.log('Callback диалога вызван, запускаем игру');
             initGame(1);
         });
     } else {
+        console.log('Диалогов нет, сразу запускаем игру');
         initGame(1);
     }
 }

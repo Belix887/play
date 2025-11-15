@@ -100,6 +100,8 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: var(--shadow);
+    position: relative;
+    z-index: 10;
 }
 
 .dialog-btn:hover {
@@ -108,6 +110,11 @@
 }
 
 .dialog-btn:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.98);
+}
+
+.dialog-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 

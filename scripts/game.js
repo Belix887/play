@@ -13,12 +13,14 @@ let levelProgress = {};
 
 // Инициализация игры
 function initGame(levelId) {
+    console.log('initGame вызван для уровня:', levelId);
     const level = getLevel(levelId);
     if (!level) {
         console.error('Уровень не найден:', levelId);
         return;
     }
     
+    console.log('Уровень найден:', level.name);
     currentLevel = level;
     timeLeft = level.timeLimit;
     selectedCells = [];
@@ -35,17 +37,24 @@ function initGame(levelId) {
         levelProgress[obj.type] = 0;
     });
     
+    console.log('Цели уровня:', levelObjectives);
+    
     // Создание игрового поля
     createBoard();
+    console.log('Игровое поле создано');
     
     // Обновление UI
     updateUI();
+    console.log('UI обновлен');
     
     // Запуск таймера
     startTimer();
+    console.log('Таймер запущен');
     
     // Показ экрана игры
+    console.log('Показываем игровой экран');
     showScreen('game-screen');
+    console.log('Игровой экран должен быть виден');
 }
 
 // Создание игрового поля
