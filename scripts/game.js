@@ -565,8 +565,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnRestart = document.getElementById('btn-restart');
     if (btnRestart) {
         btnRestart.addEventListener('click', () => {
+            isPaused = false;
+            isGameOver = false;
+            hideScreen('pause-screen');
             if (currentLevel) {
                 initGame(currentLevel.id);
+            } else {
+                startGame();
             }
         });
     }
@@ -574,6 +579,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnQuit = document.getElementById('btn-quit');
     if (btnQuit) {
         btnQuit.addEventListener('click', () => {
+            isPaused = false;
+            isGameOver = false;
+            stopTimer();
+            hideScreen('pause-screen');
             showScreen('main-menu');
         });
     }
