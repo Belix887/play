@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Киберзащита: Охранник</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/menu.css">
+    <link rel="stylesheet" href="styles/game.css">
+    <link rel="stylesheet" href="styles/dialog.css">
+    <link rel="stylesheet" href="styles/results.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Главное меню -->
+        <div id="main-menu" class="screen active">
+            <div class="menu-container">
+                <div class="game-title">
+                    <h1>🛡️ КИБЕРЗАЩИТА</h1>
+                    <h2>Охранник</h2>
+                </div>
+                
+                <div class="menu-buttons">
+                    <button id="btn-start" class="menu-btn primary">
+                        <span>🎮</span> Начать игру
+                    </button>
+                    <button id="btn-continue" class="menu-btn secondary" style="display: none;">
+                        <span>▶️</span> Продолжить
+                    </button>
+                    <button id="btn-tutorial" class="menu-btn secondary">
+                        <span>📖</span> Обучение
+                    </button>
+                    <button id="btn-stats" class="menu-btn secondary">
+                        <span>📊</span> Статистика
+                    </button>
+                </div>
+                
+                <div class="menu-footer">
+                    <p>Защити компанию от хакерских атак!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран обучения -->
+        <div id="tutorial-screen" class="screen">
+            <div class="tutorial-container">
+                <h2>📖 Как играть</h2>
+                <div class="tutorial-content">
+                    <div class="tutorial-section">
+                        <h3>🎯 Цель игры</h3>
+                        <p>Отразите 5 хакерских атак, защищая системы компании. Каждая неудача приводит к падению одной из систем.</p>
+                    </div>
+                    <div class="tutorial-section">
+                        <h3>🎮 Механика</h3>
+                        <p>Собирайте элементы в ряд по 3 и более. Каждый ход должен быть обдуманным - время ограничено!</p>
+                    </div>
+                    <div class="tutorial-section">
+                        <h3>⚡ Бонусы</h3>
+                        <p>Создавайте комбо для получения бонусов: молния, бомба, щит и замедление времени.</p>
+                    </div>
+                    <div class="tutorial-section">
+                        <h3>🏆 Оценки</h3>
+                        <p>Получайте оценки S, A, B, C в зависимости от скорости и качества защиты.</p>
+                    </div>
+                </div>
+                <button id="btn-back-menu" class="menu-btn primary">Назад</button>
+            </div>
+        </div>
+
+        <!-- Экран статистики -->
+        <div id="stats-screen" class="screen">
+            <div class="stats-container">
+                <h2>📊 Статистика</h2>
+                <div id="stats-content" class="stats-content">
+                    <p class="no-stats">Пока нет статистики. Начните игру!</p>
+                </div>
+                <button id="btn-back-stats" class="menu-btn primary">Назад</button>
+            </div>
+        </div>
+
+        <!-- Экран диалога -->
+        <div id="dialog-screen" class="screen">
+            <div class="dialog-container">
+                <div class="dialog-character">
+                    <div class="character-portrait" id="dialog-portrait">
+                        <div class="character-avatar">👤</div>
+                    </div>
+                    <div class="character-name" id="dialog-name">Никлаевич</div>
+                </div>
+                <div class="dialog-text" id="dialog-text">
+                    Текст диалога...
+                </div>
+                <button id="btn-dialog-next" class="dialog-btn">Продолжить</button>
+            </div>
+        </div>
+
+        <!-- Игровой экран -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="game-info">
+                    <div class="level-info">
+                        <span class="level-label">Уровень</span>
+                        <span id="current-level" class="level-number">1</span>
+                    </div>
+                    <div class="timer-container">
+                        <span class="timer-icon">⏱️</span>
+                        <span id="timer" class="timer">60</span>
+                    </div>
+                </div>
+                
+                <div class="systems-monitor">
+                    <div class="system-item" data-system="website">
+                        <span class="system-icon">🌐</span>
+                        <span class="system-name">Сайт</span>
+                        <div class="health-bar">
+                            <div class="health-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="system-item" data-system="accounts">
+                        <span class="system-icon">👤</span>
+                        <span class="system-name">Кабинеты</span>
+                        <div class="health-bar">
+                            <div class="health-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="system-item" data-system="email">
+                        <span class="system-icon">📧</span>
+                        <span class="system-name">Почта</span>
+                        <div class="health-bar">
+                            <div class="health-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="system-item" data-system="turnstiles">
+                        <span class="system-icon">🚪</span>
+                        <span class="system-name">Турникеты</span>
+                        <div class="health-bar">
+                            <div class="health-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="system-item" data-system="cameras">
+                        <span class="system-icon">📹</span>
+                        <span class="system-name">Камеры</span>
+                        <div class="health-bar">
+                            <div class="health-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-board-container">
+                <div class="level-objective">
+                    <span id="objective-text">Соберите 50 🔴 файрволов</span>
+                    <div class="objective-progress">
+                        <div id="objective-progress-bar" class="progress-bar-fill"></div>
+                    </div>
+                    <span id="objective-count">0 / 50</span>
+                </div>
+                
+                <div id="game-board" class="game-board"></div>
+                
+                <div class="game-controls">
+                    <button id="btn-pause" class="control-btn">⏸️ Пауза</button>
+                    <div class="combo-indicator" id="combo-indicator">
+                        <span>Комбо: <span id="combo-count">0</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран паузы -->
+        <div id="pause-screen" class="screen overlay">
+            <div class="pause-container">
+                <h2>⏸️ Пауза</h2>
+                <button id="btn-resume" class="menu-btn primary">Продолжить</button>
+                <button id="btn-restart" class="menu-btn secondary">Начать заново</button>
+                <button id="btn-quit" class="menu-btn secondary">Выйти в меню</button>
+            </div>
+        </div>
+
+        <!-- Экран результатов уровня -->
+        <div id="level-result-screen" class="screen">
+            <div class="result-container">
+                <div id="result-header" class="result-header">
+                    <h2 id="result-title">Результаты уровня</h2>
+                    <div id="result-grade" class="result-grade">S</div>
+                </div>
+                
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Время</span>
+                        <span id="result-time" class="stat-value">25 сек</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Комбо</span>
+                        <span id="result-combos" class="stat-value">8</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Точность</span>
+                        <span id="result-accuracy" class="stat-value">95%</span>
+                    </div>
+                </div>
+
+                <div class="systems-status">
+                    <h3>Состояние систем</h3>
+                    <div id="systems-status-list" class="systems-list"></div>
+                </div>
+
+                <div class="result-actions">
+                    <button id="btn-next-level" class="menu-btn primary" style="display: none;">Следующий уровень</button>
+                    <button id="btn-retry-level" class="menu-btn secondary" style="display: none;">Повторить</button>
+                    <button id="btn-continue-after-fail" class="menu-btn secondary" style="display: none;">Продолжить</button>
+                    <button id="btn-to-menu" class="menu-btn secondary">В меню</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Финальный экран -->
+        <div id="final-screen" class="screen">
+            <div class="final-container">
+                <h2 id="final-title">Итоговый отчет</h2>
+                <div class="final-grade" id="final-grade">A</div>
+                
+                <div class="final-stats">
+                    <h3>Общая статистика</h3>
+                    <div id="final-stats-list"></div>
+                </div>
+
+                <div class="levels-results">
+                    <h3>Результаты по уровням</h3>
+                    <div id="levels-results-list"></div>
+                </div>
+
+                <div class="final-systems">
+                    <h3>Финальное состояние систем</h3>
+                    <div id="final-systems-list"></div>
+                </div>
+
+                <div class="final-comment" id="final-comment">
+                    <p>Комментарий Никлаевича...</p>
+                </div>
+
+                <div class="final-actions">
+                    <button id="btn-share" class="menu-btn primary">Поделиться</button>
+                    <button id="btn-restart-game" class="menu-btn secondary">Играть снова</button>
+                    <button id="btn-final-menu" class="menu-btn secondary">В меню</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/config.js"></script>
+    <script src="scripts/telegram.js"></script>
+    <script src="scripts/levels.js"></script>
+    <script src="scripts/dialog.js"></script>
+    <script src="scripts/game.js"></script>
+    <script src="scripts/results.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
+

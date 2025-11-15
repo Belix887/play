@@ -1,0 +1,142 @@
+/* Главное меню */
+.menu-container {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    padding: 40px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+}
+
+.game-title {
+    margin-bottom: 40px;
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+.game-title h1 {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #60a5fa, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(96, 165, 250, 0.5);
+}
+
+.game-title h2 {
+    font-size: 24px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 3px;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.2);
+    }
+}
+
+.menu-buttons {
+    margin: 30px 0;
+}
+
+.menu-footer {
+    margin-top: 30px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Обучение */
+.tutorial-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 30px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.tutorial-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+    color: var(--text-primary);
+}
+
+.tutorial-content {
+    margin-bottom: 30px;
+}
+
+.tutorial-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(37, 99, 235, 0.1);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.tutorial-section h3 {
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    font-size: 20px;
+}
+
+.tutorial-section p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Статистика */
+.stats-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 30px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+}
+
+.stats-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+.stats-content {
+    margin-bottom: 30px;
+}
+
+.no-stats {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 40px;
+    font-size: 18px;
+}
+
+/* Пауза */
+.pause-container {
+    text-align: center;
+    padding: 40px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+    max-width: 400px;
+    width: 100%;
+}
+
+.pause-container h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
